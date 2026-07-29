@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YASCI Login</title>
+    <link rel="stylesheet" href="style.css"> <!--style-->
+</head>
+
+<body class="login-page">  <!--login page-->
+
+<div class="login-container">
+
+    <img src="images.jpg" class="login-logo">
+    <h2>YASCI Maintenance</h2>
+    <p>School Maintenance Report System</p>
+
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">LOGIN</button>
+
+    <p>
+        <a href="#">Forgot Password?</a>
+    </p>
+
+</div>
+
+
+<script>
+
+function login(){
+
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    if(username === "admin" && password === "12345"){  <!--User and password-->
+        window.location.href = "home.html";
+    }
+    else{
+        alert("Incorrect Username or Password");
+    }
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>YASCI Maintenance Admin Dashboard</h1>
+
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="admin.html">Admin</a>
+        <a href="index.html" class="logout">Logout</a>
+    </nav>
+    </header>
+
+    <section>
+        <h2>Submitted Reports</h2>
+        <div id="reportsContainer"></div>
+    </section>
+
+<script>
+    function loadReports() {
+        let reports = JSON.parse(localStorage.getItem("reports")) || [];
+        let container = document.getElementById("reportsContainer");
+        container.innerHTML = "";
+        
+        if (reports.length === 0) {
+                container.innerHTML = "<p>No reports submitted yet.</p>";
+                return;
+            }
+
+        reports.forEach((report, index) => {
+        container.innerHTML += `
+            <div class="report-card">
+                <h3>${report.problem}</h3>
+                <p><strong>Name:</strong> ${report.name}</p>
+                <p><strong>Location:</strong> ${report.location}</p>
+                <p><strong>Description:</strong> ${report.description}</p>
+                <p><strong>Priority:</strong> ${report.priority}</p>
+ 
+            <p>
+                <strong>Status:</strong>
+                <select onchange="updateStatus(${index}, this.value)">
+                <option value="Pending" ${report.status === "Pending" ? "selected" : ""}>Pending</option>
+                <option value="In Progress" ${report.status === "In Progress" ? "selected" : ""}>In Progress</option>
+                <option value="Completed" ${report.status === "Completed" ? "selected" : ""}>Completed</option>
+                </select>
+            </p>
+
+                <button onclick="deleteReport(${index})">
+                    Delete Report
+                </button>
+            </div>
+            <hr>
+                `;
+            });
+        }
+
+        function updateStatus(index, newStatus) {
+            let reports = JSON.parse(localStorage.getItem("reports")) || [];
+            reports[index].status = newStatus;
+            localStorage.setItem("reports", JSON.stringify(reports));
+            loadReports();
+        }
+             
+        function deleteReport(index) {
+            if (confirm("Are you sure you want to delete this report?")) {
+            let reports = JSON.parse(localStorage.getItem("reports")) || [];
+            reports.splice(index, 1);
+            localStorage.setItem("reports", JSON.stringify(reports));
+            loadReports();
+            }
+        }
+
+            loadReports();
+
+</script>
+
+
+</body>
+</html>
+
+
+
+<

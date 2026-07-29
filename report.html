@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Maintenance Report</title>
+<link rel="stylesheet" href="style.css"> <!--Style-->
+
+</head>
+
+
+<body>
+
+
+<header>                          <!-- Report page-->
+
+    <div class="brand">
+
+        <img src="images.jpg" class="logo">
+        <h2>YASCI Maintenance</h2>       
+
+    </div>
+
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="admin.html">Admin</a>
+        <a href="index.html" class="logout">Logout</a>
+    </nav>
+
+</header>
+
+
+
+<section>
+
+<h1>
+Submit Maintenance Report
+</h1>
+
+
+<form class="report-form" onsubmit="submitReport(event)">
+
+
+<input 
+type="text"
+id="name"
+placeholder="Your Name"
+required
+>
+
+
+<input
+type="text"
+id="location"
+placeholder="Room / Location"
+required
+>
+
+<input
+type="text"
+id="problem"
+placeholder="Problem Title"
+required
+>
+
+<textarea 
+id="description"
+placeholder="Describe the problem"
+required>
+</textarea>
+
+                                    <!--Priority Level-->
+<select id="priority" required>
+    <option value="">-- Select Priority --</option>
+    <option value="Emergency">Emergency - Immediate danger</option>
+    <option value="Urgent">Urgent - Needs repair today</option>
+    <option value="Normal">Normal - Repair when available</option>
+    <option value="Minor">Minor - Can be scheduled</option>
+</select>
+
+
+
+<button>
+Submit Report
+</button>
+
+</form>
+
+</section>
+
+
+<script>
+   
+<!--Letters only name, problem content-->
+function lettersOnly(input) {
+    input.value = input.value.replace(/[^A-Za-z\s]/g, '');
+}
+document.getElementById("name").addEventListener("input", function () {
+    lettersOnly(this);
+});
+document.getElementById("problem").addEventListener("input", function () {
+    lettersOnly(this);
+});
+
+
+function submitReport(event){
+event.preventDefault();
+let report = {
+
+name:
+document.getElementById("name").value,
+
+location:
+document.getElementById("location").value,
+
+problem:
+document.getElementById("problem").value,
+
+description:
+document.getElementById("description").value,
+
+priority:
+document.getElementById("priority").value,
+
+status:
+"Pending"
+};
+
+
+
+let reports =
+JSON.parse(localStorage.getItem("reports")) || [];
+
+reports.push(report);
+
+localStorage.setItem(
+"reports",
+JSON.stringify(reports)
+);
+
+alert("Report submitted successfully!");
+
+document.querySelector("form").reset();
+}
+
+</script>
+
+
+</body>
+</html>
